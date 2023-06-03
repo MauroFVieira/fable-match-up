@@ -2,6 +2,8 @@ shader_type canvas_item;
 
 uniform float level : hint_range(0.0, 1.0);
 uniform sampler2D noise_texture;
+
+// from https://ask.godotengine.org/53831/using-hsv-values-in-shaders-instead-of-rgb?show=99084#a99084
 vec4 hsv_to_rgb(float h, float s, float v, float a){
     //based on 
     //https://stackoverflow.com/questions/51203917/math-behind-hsv-to-rgb-conversion-of-colors
@@ -43,41 +45,18 @@ vec4 hsv_to_rgb(float h, float s, float v, float a){
     return vec4(r,g,b,a);
 }
 
-float atan2(float x, float y){
-    if (x > 0.0){
-        return atan(y/x);
-    }
-    else if (x < 0.0){
-        if (y >= 0.0){
-            return atan(y/x) + PI;
-        }
-        else {
-            return atan(y/x) - PI;
-        }
-    }
-    else { // This is x=0
-        if(y > 0.0){
-            return PI/2.0;
-        }
-        else {
-            // This includes the actually undefined x=y=0 case
-            return -PI/2.0;
-        }
-    }
-}
-
 void fragment() {
-	vec4 current_pixel = texture(TEXTURE, UV);
 	vec4 current_noise = texture(noise_texture, UV);
 
-	if (level == 0.0)
-		COLOR = current_pixel;
+	if (level > 0.99999)
+		COLOR.a = 0.0;
 	else
 	{
-		COLOR.a = (current_noise.r - level) / level;
+		float alpha = (level - current_noise.r) / 0.2;
+		COLOR.a = 1.0 - alpha;
 		if (COLOR.a < 1.0)
 		{
-			vec4 rgba = hsv_to_rgb(clamp(current_noise.r, 0.0, 1.0), 1.0, 1.0, 1.0);
+			vec4 rgba = hsv_to_rgb(COLOR.a, 1.0, 1.0, 1.0);
 			COLOR.r = rgba.r;
 			COLOR.g = rgba.g;
 			COLOR.b = rgba.b;
