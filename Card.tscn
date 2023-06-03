@@ -1,0 +1,69 @@
+[gd_scene load_steps=11 format=3 uid="uid://e5ls0uureyf3"]
+
+[ext_resource type="Texture2D" uid="uid://cr661hgumisdv" path="res://tortoise.png" id="1_rb4qy"]
+[ext_resource type="Shader" path="res://Iridescence.gdshader" id="2_31uur"]
+[ext_resource type="Texture2D" uid="uid://3wi2nnty1tmo" path="res://back.png" id="2_vokj1"]
+[ext_resource type="Script" path="res://Back.gd" id="4_3crdt"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2mv8v"]
+noise_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_iyw6m"]
+noise = SubResource("FastNoiseLite_2mv8v")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_chso2"]
+shader = ExtResource("2_31uur")
+shader_parameter/level = 0.0
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_iyw6m")
+
+[sub_resource type="Animation" id="Animation_m3c2v"]
+resource_name = "dissolve"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Back:material:shader_parameter/level")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="Animation_vs1rr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Back:material:shader_parameter/level")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_44gax"]
+_data = {
+"RESET": SubResource("Animation_vs1rr"),
+"dissolve": SubResource("Animation_m3c2v")
+}
+
+[node name="Card" type="Node2D"]
+
+[node name="Face" type="Sprite2D" parent="."]
+texture = ExtResource("1_rb4qy")
+
+[node name="Back" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_chso2")
+texture = ExtResource("2_vokj1")
+script = ExtResource("4_3crdt")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Back"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_44gax")
+}
