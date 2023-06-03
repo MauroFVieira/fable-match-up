@@ -25,6 +25,10 @@ window/size/resizable=false
 
 project/assembly_name="Fable Match-Up"
 
+[filesystem]
+
+import/blender/enabled=false
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

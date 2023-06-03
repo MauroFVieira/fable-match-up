@@ -1,9 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://e5ls0uureyf3"]
+[gd_scene load_steps=11 format=3 uid="uid://bt4ed4df0kko3"]
 
-[ext_resource type="Texture2D" uid="uid://cr661hgumisdv" path="res://tortoise.png" id="1_rb4qy"]
-[ext_resource type="Shader" path="res://Iridescence.gdshader" id="2_31uur"]
-[ext_resource type="Texture2D" uid="uid://3wi2nnty1tmo" path="res://back.png" id="2_vokj1"]
-[ext_resource type="Script" path="res://Back.gd" id="4_3crdt"]
+[ext_resource type="Script" path="res://Card/Card.gd" id="1_ubtrn"]
+[ext_resource type="Texture2D" uid="uid://cr661hgumisdv" path="res://Assets/tortoise.png" id="2_l2y5a"]
+[ext_resource type="Shader" path="res://Card/Iridescence.gdshader" id="3_546el"]
+[ext_resource type="Texture2D" uid="uid://3wi2nnty1tmo" path="res://Assets/back.png" id="4_c62un"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_2mv8v"]
 noise_type = 0
@@ -12,24 +12,10 @@ noise_type = 0
 noise = SubResource("FastNoiseLite_2mv8v")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_chso2"]
-shader = ExtResource("2_31uur")
+resource_local_to_scene = true
+shader = ExtResource("3_546el")
 shader_parameter/level = 0.0
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_iyw6m")
-
-[sub_resource type="Animation" id="Animation_m3c2v"]
-resource_name = "dissolve"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Back:material:shader_parameter/level")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(2, 1),
-"update": 0,
-"values": [0.0, 1.0]
-}
 
 [sub_resource type="Animation" id="Animation_vs1rr"]
 length = 0.001
@@ -46,6 +32,21 @@ tracks/0/keys = {
 "values": [0.0]
 }
 
+[sub_resource type="Animation" id="Animation_m3c2v"]
+resource_name = "dissolve"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Back:material:shader_parameter/level")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(2, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_44gax"]
 _data = {
 "RESET": SubResource("Animation_vs1rr"),
@@ -53,14 +54,16 @@ _data = {
 }
 
 [node name="Card" type="Node2D"]
+position = Vector2(64, 96)
+scale = Vector2(0.7, 0.7)
+script = ExtResource("1_ubtrn")
 
 [node name="Face" type="Sprite2D" parent="."]
-texture = ExtResource("1_rb4qy")
+texture = ExtResource("2_l2y5a")
 
 [node name="Back" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_chso2")
-texture = ExtResource("2_vokj1")
-script = ExtResource("4_3crdt")
+texture = ExtResource("4_c62un")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Back"]
 root_node = NodePath("../..")
