@@ -1,6 +1,11 @@
 extends Node2D
 
 var isOpen: bool = false
+var type: int
+
+
+func _ready():
+	$RichTextLabel.text = str(type)
 
 
 func _input(event):

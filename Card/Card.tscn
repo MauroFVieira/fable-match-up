@@ -61,6 +61,12 @@ script = ExtResource("1_ubtrn")
 [node name="Face" type="Sprite2D" parent="."]
 texture = ExtResource("2_l2y5a")
 
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 23.0
+offset_top = 57.0
+offset_right = 57.0
+offset_bottom = 91.0
+
 [node name="Back" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_chso2")
 texture = ExtResource("4_c62un")
