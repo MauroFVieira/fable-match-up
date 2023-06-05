@@ -10,7 +10,7 @@ func _input(event):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		if $Back.get_rect().has_point(to_local(event.position)):
 			if !isOpen:
-				if get_parent().try_start_flipping(type):
+				if get_parent().get_parent().try_start_flipping(type):
 					reveal()
 
 func turn_back():
@@ -27,4 +27,4 @@ func get_size():
 	return $Face.texture.get_size() * scale.x
 
 func on_card_flipped():
-	get_parent().on_card_flipped()
+	get_parent().get_parent().on_card_flipped()

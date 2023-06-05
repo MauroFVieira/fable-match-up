@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://c2ia5q5ow56v"]
+[gd_scene load_steps=3 format=3 uid="uid://c2ia5q5ow56v"]
 
 [ext_resource type="Script" path="res://Board/Board.gd" id="1_4fk8n"]
+[ext_resource type="PackedScene" uid="uid://b117fini01vgy" path="res://Chart/Chart.tscn" id="2_i21o5"]
 
 [node name="Board" type="Node2D"]
 script = ExtResource("1_4fk8n")
+
+[node name="Chart" parent="." instance=ExtResource("2_i21o5")]
+
+[node name="Cards" type="Node2D" parent="."]
